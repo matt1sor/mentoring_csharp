@@ -10,19 +10,17 @@ namespace CdDataBase
         public double Duration;
         public List<Person> Artists;
         public Person Composer;
-        public string TrackId{ get; }
+        public string TrackId { get; }
         
-        private string GenerateId()
-        {
-            return Guid.NewGuid().ToString("N");
-        }
+        private static IdGenerator _idGenerator = new IdGenerator();
+        string _randomId = _idGenerator.GenerateId();
         public Track(string title, double duration, List<Person> artists, Person composer)
         {
             Title = title;
             Duration = duration;
             Artists = artists;
             Composer = composer;
-            TrackId = GenerateId();
+            TrackId = _randomId;
         }
         
         

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace CdDataBase
 {
@@ -6,18 +7,17 @@ namespace CdDataBase
     {
         public string Name;
         public string Lastname;
+        public List<Person> PersonList;
         public string PersonId { get; }
         
-        private string GenerateId()
-        {
-            return Guid.NewGuid().ToString("N");
-        }
+        private static IdGenerator _idGenerator = new IdGenerator();
+        string _randomId = _idGenerator.GenerateId();
 
         public Person(string name, string lastname)
         {
             Name = name;
             Lastname = lastname;
-            PersonId = GenerateId();
+            PersonId = _randomId;
         }
         
     }

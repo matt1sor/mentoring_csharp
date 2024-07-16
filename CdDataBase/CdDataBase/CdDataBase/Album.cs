@@ -12,10 +12,8 @@ namespace CdDataBase
 
         public string AlbumId { get; }
 
-    private string GenerateId()
-        {
-            return Guid.NewGuid().ToString("N");
-        }
+        private static IdGenerator _idGenerator = new IdGenerator();
+        string _randomId = _idGenerator.GenerateId();
         public Album(string title, string type, double duration, List<Track> tracks, List<Person> artists)
         {
             Title = title;
@@ -23,7 +21,7 @@ namespace CdDataBase
             Duration = duration;  
             Tracks = tracks;
             Musicians = artists;
-            AlbumId = GenerateId();
+            AlbumId = _randomId;
         }
         
     }

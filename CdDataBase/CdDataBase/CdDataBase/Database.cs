@@ -8,13 +8,16 @@ namespace CdDataBase
 {
     public class Database
     {
+        // private static Database instance = new Database(); //eager version
+        private static readonly Lazy<Database> instance = new Lazy<Database>(() => new Database());
         private List<Album> albums;
 
-        public Database()
+        private  Database()
         {
             albums = new List<Album>();
         }
 
+        public static Database Instance => instance.Value;
         public void AddAlbumToDatabase(Album album)
         {
             albums.Add(album);
@@ -46,7 +49,7 @@ namespace CdDataBase
         // }
         
         
-        public void TrackDetailsByNumber(int albumId,int trackNumber)
+        public void TrackDetailsByNumber(string albumId,int trackNumber)
         {
             var album = albums.FirstOrDefault(a => a.AlbumId == albumId.ToString());
             if (album != null)
@@ -75,7 +78,7 @@ namespace CdDataBase
         }
         
         
-        public void TrackDetailsByName(int albumId,string trackName)
+        public void TrackDetailsByName(string albumId,string trackName)
         {
             var album = albums.FirstOrDefault(a => a.AlbumId == albumId.ToString());
             if (album != null)
@@ -128,7 +131,7 @@ namespace CdDataBase
     {
         static void Main()
         {
-            var database = new Database();
+            var database = Database.Instance;
             Person mateusz = new Person("Mateusz","Depka");
             Person mariusz = new Person("Mariusz","Depka");
             Person adam = new Person("Adam","Depka");
@@ -145,6 +148,7 @@ namespace CdDataBase
             
             database.AddAlbumToDatabase(intern);
             database.DisplayAll();
+            
             // database.AlbumDetails(1);
             // database.TrackDetails(1,2);
             // database.SaveToFile("/Users/mateusz");
